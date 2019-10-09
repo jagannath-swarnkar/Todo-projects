@@ -63,14 +63,14 @@ module.exports = (todos,knex,checkToken)=>{
 
     // editing a todo by its id and updating in db and rendering--------------------
     todos.put('/edit/:id',checkToken,(req,res)=>{
-        console.log('database data',req.body.text);
+        console.log('edit clicked')
         let text = req.body.text;          
         knex('todos')
         // .where('todos.userId',req.tokenData.user_id)
         .where('todos.id',req.body.id)
         .update({text:text})
         .then((data) =>{
-            console.log('database data',data);
+            console.log('todo updated to db')
             knex('todos')
             .select('*')
             .where('todos.project_id',parseInt(req.body.project_id))

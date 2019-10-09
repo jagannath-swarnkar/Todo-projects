@@ -51,7 +51,7 @@ module.exports = (project,knex,jwt,checkToken)=>{
     project.post('/getProject',checkToken,(req,res)=>{
         knex('todos')
             .select(
-                'todos.user_id'
+                'todos.project_id'
             )
             .where('todos.assigned_to',req.tokenData.email)
             .then((data1)=>{
@@ -59,7 +59,7 @@ module.exports = (project,knex,jwt,checkToken)=>{
                     knex('projects')
                         .select('*')
                         .where('projects.user_id',req.tokenData.user_id)
-                        .orWhere('projects.user_id',data1[0].user_id)
+                        .orWhere('projects.project_id',data1[0].project_id)
                         .then((result)=>{
                             console.log(result)
                             res.json(result)

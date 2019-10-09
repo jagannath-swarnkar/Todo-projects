@@ -4,14 +4,14 @@ let checkToken = (req,res,next)=>{
     if(typeof(token) !== undefined){ 
          jwt.verify(req.body.token,process.env.SECRET,(err,tokenData)=>{
             if(!err){
-                // console.log(tokenData)
                 req.tokenData = JSON.parse(tokenData.data);
             }else{
                 console.log('err in verifying toke in TokenVerify.js',err)
+                res.json('tokenExpires')
             }
          })
     }else{
-        console.log('token is indefined',token)
+        console.log('token is undefined',token)
     }
     next()
 }

@@ -18,7 +18,9 @@ export class App extends Component {
   }
 
   UNSAFE_componentWillMount(){
+    console.log('willMount');
     var token = reactLocalStorage.get('token')
+    
     axios
     .post('http://localhost:3030/getProject',({
       'token':token
@@ -32,6 +34,8 @@ export class App extends Component {
   }
 
   componentWillUpdate(){
+    console.log('willUpdate');
+    
     var Token =reactLocalStorage.get('token');
     axios
     .get('http://localhost:3030/checkToken',{params:{token:Token}})
@@ -61,22 +65,25 @@ export class App extends Component {
       }
     return (
       <React.Fragment>
-        <Header />
+        
+          <Header />
+        <div style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
           <Projects
             Projects={this.state.Projects}
             logout={this.logout}
           />
+        </div>
         <div style={{
-          right:0,
+          right:10,
           margin:30,
           marginRight:60,
-          position: 'absolute',
-          bottom:0
+          position: 'fixed',
+          bottom:5
           }}
           >
-          <Addicon 
-            projectHandler={this.projectHandler}
-          />
+            <Addicon 
+              projectHandler={this.projectHandler}
+            />
         </div>
       </React.Fragment>
     )

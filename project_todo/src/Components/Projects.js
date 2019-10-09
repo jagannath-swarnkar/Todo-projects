@@ -14,11 +14,13 @@ const useStyles = makeStyles(theme => ({
 
   card: {
     background: '#90ee90de',
-    maxWidth: 345,
-    maxHeight:345,
-    heigh :250,
-    margin:40,
+    width:400,
+    height:250,
+    margin:35,
     cursor:"pointer",
+  },
+  middle:{
+    height:105,
   },
   media: {
     height: 0,
@@ -51,7 +53,7 @@ export default function RecipeReviewCard(props) {
   
   const data = props.Projects.map((e,i)=>{
     return (
-      <Card title={`Project_id : ${e.project_id}`}
+      <Card title={`Project_id : ${e.project_id}`} 
         className={classes.card} 
         onClick={()=>onClickCart(e.project_id)} >
         <CardHeader
@@ -68,7 +70,7 @@ export default function RecipeReviewCard(props) {
           title={e.project_name}
           subheader={e.project_date}
         />
-        <CardContent>
+        <CardContent className={classes.middle}>
           <Typography variant="body1" color="textPrimary" component="p">
             {e.description}
           </Typography>
@@ -77,7 +79,8 @@ export default function RecipeReviewCard(props) {
           <Typography variant="body2" color="textSecondary" component="p">
             Created by : {e.user_name}
           </Typography>
-        </CardContent>
+          </CardContent>.
+        
       </Card>
     );
   })

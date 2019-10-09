@@ -43,7 +43,7 @@ export class Todos extends Component {
     componentWillUpdate(){
         var Token =reactLocalStorage.get('token');
         axios
-        .get('http://localhost:3030/checkToken',{params:{token:Token}})
+        .get('http://localhost:3030/checkToken',({params:{token:Token}}))
         .then(result=>{
                 if(result.data==='tokenExpires'){
                     reactLocalStorage.get('token','')
@@ -62,7 +62,7 @@ export class Todos extends Component {
     onChangeHandler2 = (e) =>{
         this.setState({assignedTo:e.target.value})
     }
-    logout=()=>{this.setState({redirect:true})}
+    logout=()=>{this.setState({redirect:true});}
 
     addItem = (e) =>{
         var project_id = this.props.match.params.id
@@ -139,11 +139,12 @@ export class Todos extends Component {
         this.setState({editItem:e.target.value})
     }
     updateTodo=(e)=>{
-        console.log('edit',e.key)
+        console.log(this.state.editItem,this.state.editId,this.state.todoId);
+        
         var project_id = this.props.match.params.id
         if(e.key==="Enter"){
+            // console.log(this.state.editItem,this.state.editId,this.state.todoId);
             if((this.state.editItem.length>0) && (this.state.editItem.match(/[a-z]/i))){
-                console.log('if true')
                 axios
                 .put('http://localhost:3030/edit/'+this.state.editId,({
                     id : this.state.editId,
@@ -152,6 +153,7 @@ export class Todos extends Component {
                     token : reactLocalStorage.get('token')
                     }))
                 .then((result)=>{
+                    console.log('todo updated successfully')
                     this.setState({
                         itemList:result.data,
                         editId:"",
@@ -177,12 +179,13 @@ export class Todos extends Component {
         }
         return (
             <div>
+                <div style={{position:'sticky',top:0, width:'100%'}}>
                 <TodoHeader 
                     itemList={this.state.itemList}
                     logout={this.logout}
                     listShouldbe={this.listShouldbe}
                     projectName={this.projectName}
-                />
+                /></div>
                 <AddTodo 
                     item={this.state.item}
                     assignedTo={this.state.assignedTo}
